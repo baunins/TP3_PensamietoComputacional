@@ -31,7 +31,7 @@ if __name__ == "__main__":
     while dungeon.level >= 0:
         turns += 1
         # render map
-        dungeon.render(player)
+        dungeon.render(player, gnome)
 
         # read key
         key = magic.read_single_keypress()

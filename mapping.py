@@ -1,10 +1,12 @@
+from py_compile import _get_default_invalidation_mode
 import random
 from typing import Optional, Tuple, List
 
-#from gnome import Gnome, gnome
+import gnome
 import player
 import items
 from human import human
+from gnome import gnomes
 
 
 Location = Tuple[int, int]
@@ -107,7 +109,7 @@ class Level:
         items.append(item)
         self.items[(i, j)] = items
 
-    def render(self, player: player.Player):
+    def render(self, player: player.Player, gnome: gnome.Gnome):
         """Draw the map onto the terminal, including player and items. Player must have a loc() method, returning its
         location, and a face attribute. All items in the map must have a face attribute which is going to be shown. If
         there are multiple items in one location, only one will be rendered.
@@ -119,6 +121,10 @@ class Level:
             for j, cell in enumerate(row):
                 if (j, i) == player.loc():
                     print(player.face, end='')
+
+                if (j, i) == gnome.loc():
+                    print(gnome.face, end='')
+
                 elif (i, j) in self.items:
                     print(self.items[(i, j)][0].face, end='')
                 else:
@@ -250,12 +256,12 @@ class Dungeon:
         # Ubicar escalera del nivel inferior
         self.dungeon[-1].add_stair_up(self.stairs_up[-1])
 
-    def render(self, player: player.Player):
+    def render(self, player: player.Player, gnome: gnome.Gnome):
         """Draw current level onto the terminal, including player and items. Player must have a loc() method, returning
         its location, and a face attribute. All items in the map must have a face attribute which is going to be shown.
         If there are multiple items in one location, only one will be rendered.
         """
-        self.dungeon[self.level].render(player)
+        self.dungeon[self.level].render(player, gnome)
 
     def find_free_tile(self) -> Location:
         """Randomly searches for a free location inside the level's map.
@@ -300,4 +306,4 @@ class Dungeon:
 
 dungeon = Dungeon(25, 80)
 
-dungeon.render(human)
+dungeon.render(human, gnomes)
