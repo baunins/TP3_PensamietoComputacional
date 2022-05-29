@@ -31,11 +31,14 @@ if __name__ == "__main__":
     while dungeon.level >= 0:
         turns += 1
         # render map
-        dungeon.render(player, gnome)
+        dungeon.render(player)
 
         # read key
         key = magic.read_single_keypress()
         # Hacer algo con keys:
+
+        if key[-1] not in 'wasd':
+            continue
 
         if key[-1] == 'w':
             actions.move_up(mapping.dungeon, player, gnome)
