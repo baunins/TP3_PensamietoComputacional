@@ -1,6 +1,5 @@
 from typing import Union, Tuple
 
-from game import ROWS, COLUMNS
 import mapping
 import random
 import player
@@ -30,8 +29,8 @@ def move_to(dungeon: mapping.Dungeon, player: player.Player, location: Tuple[num
 
 def random_player_spawn():
 
-    rows = random.randrange(1, ROWS)
-    columns = random.randrange(1, COLUMNS)
+    rows = random.randrange(1, 25)
+    columns = random.randrange(1, 80)
 
     return rows, columns
 
@@ -47,51 +46,57 @@ def random_gnome_movement():
     elif num == 2:
         return (loc_gnome[0] - 1, loc_gnome[1])
     
-    elif num == 1:
+    elif num == 3:
         return (loc_gnome[0], loc_gnome[1] - 1)
     
-    elif num == 1:
+    elif num == 4:
         return (loc_gnome[0] + 1, loc_gnome[1])
     
 
-def move_up(dungeon: mapping.Dungeon, human, gnome):
+def move_up(dungeon: mapping.Dungeon, human):
     
     loc_human = human.loc()
-    new_loc_human = (loc_human[0], loc_human[1] + 1)
+    if loc_human[1] - 1 > -1:
+        new_loc_human = (loc_human[0], loc_human[1] - 1)
+    else:
+        new_loc_human = loc_human
     new_loc_gnome = random_gnome_movement()
 
-    human.move_to(new_loc_human)
-    gnome.move_to(new_loc_gnome)
+    return (new_loc_human, new_loc_gnome)
 
 
-def move_down(dungeon: mapping.Dungeon, human, gnome):
+def move_down(dungeon: mapping.Dungeon, human):
     
     loc_human = human.loc()
-    new_loc_human = (loc_human[0], loc_human[1] - 1)
+    if loc_human[1] + 1 < 25:
+        new_loc_human = (loc_human[0], loc_human[1] + 1)
+    else:
+        new_loc_human = loc_human 
     new_loc_gnome = random_gnome_movement()
+    
+    return (new_loc_human, new_loc_gnome)
 
-    human.move_to(new_loc_human)
-    gnome.move_to(new_loc_gnome)
 
-
-def move_left(dungeon: mapping.Dungeon, human, gnome):
+def move_left(dungeon: mapping.Dungeon, human):
    
     loc_human = human.loc()
-    new_loc_human = (loc_human[0] - 1, loc_human[1])
+    if loc_human[0] - 1 > 1:
+        new_loc_human = (loc_human[0] - 1, loc_human[1])
+    else:
+        new_loc_human = loc_human
     new_loc_gnome = random_gnome_movement()
 
-    human.move_to(new_loc_human)
-    gnome.move_to(new_loc_gnome)
+    return (new_loc_human, new_loc_gnome)
 
 
-def move_right(dungeon: mapping.Dungeon, human, gnome):
+def move_right(dungeon: mapping.Dungeon, human):
     
     loc_human = human.loc()
-    new_loc_human = (loc_human[0] + 1, loc_human[1])
+    if loc_human[0] + 1 < 80:
+        new_loc_human = (loc_human[0] + 1, loc_human[1])
     new_loc_gnome = random_gnome_movement()
 
-    human.move_to(new_loc_human)
-    gnome.move_to(new_loc_gnome)
+    return (new_loc_human, new_loc_gnome)
 
 
 def climb_stair(dungeon: mapping.Dungeon, player: player.Player):
@@ -107,3 +112,5 @@ def descend_stair(dungeon: mapping.Dungeon, player: player.Player):
 def pickup(dungeon: mapping.Dungeon, player: player.Player):
     # completar
     raise NotImplementedError
+
+print(random_gnome_movement())

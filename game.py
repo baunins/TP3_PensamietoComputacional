@@ -2,9 +2,8 @@ import time
 import mapping
 import magic
 
-import random
 from gnome import Gnome
-from human import Human
+from human import Human, human
 from items import Item
 import actions
 from player import Player
@@ -30,24 +29,60 @@ if __name__ == "__main__":
     turns = 0
     while dungeon.level >= 0:
         turns += 1
-        # render map
-        dungeon.render(player, gnome)
+
+        dungeon.render(human, gnome)
 
         # read key
         key = magic.read_single_keypress()
         # Hacer algo con keys:
 
         if key[-1] == 'w':
-            actions.move_up(mapping.dungeon, player, gnome)
+            move = actions.move_up(dungeon, human)
+            move_player = move[0]
+            move_gnome = move[1]
+
+            if dungeon.is_walkable(move_player) == True:
+                human.move_to(move_player)
+
+            if dungeon.is_walkable(move_gnome) == True:
+                gnome.move_to(move_gnome)
 
         elif key[-1] == 'a':
-            actions.move_left(mapping.dungeon, player, gnome)
+
+            move = actions.move_left(dungeon, human)
+            move_player = move[0]
+            move_gnome = move[1]
+
+            if dungeon.is_walkable(move_player) == True:
+                human.move_to(move_player)
+
+            if dungeon.is_walkable(move_gnome) == True:
+                gnome.move_to(move_gnome)
         
         elif key[-1] == 's':
-            actions.move_down(mapping.dungeon, player, gnome)
+        
+            move = actions.move_down(dungeon, human)
+            move_player = move[0]
+            move_gnome = move[1]
+
+            if dungeon.is_walkable(move_player) == True:
+                human.move_to(move_player)
+
+            if dungeon.is_walkable(move_gnome) == True:
+                gnome.move_to(move_gnome)
 
         elif key[-1] == 'd':
-            actions.move_right(mapping.dungeon, player, gnome)
+
+            move = actions.move_right(dungeon, human)
+            move_player = move[0]
+            move_gnome = move[1]
+
+            if dungeon.is_walkable(move_player) == True:
+                human.move_to(move_player)
+
+            if dungeon.is_walkable(move_gnome) == True:
+                gnome.move_to(move_gnome)
+
 
         # move player and/or gnomes
 

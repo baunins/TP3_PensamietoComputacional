@@ -6,7 +6,7 @@ import gnome
 import player
 import items
 from human import human
-from gnome import gnomes
+from gnome import gnome
 
 
 Location = Tuple[int, int]
@@ -109,12 +109,11 @@ class Level:
         items.append(item)
         self.items[(i, j)] = items
 
-    def render(self, player: player.Player, gnome: gnome.Gnome):
+    def render(self, player, gnome):
         """Draw the map onto the terminal, including player and items. Player must have a loc() method, returning its
         location, and a face attribute. All items in the map must have a face attribute which is going to be shown. If
         there are multiple items in one location, only one will be rendered.
         """
-        # completar (cuando se agregue el gnomo)
         print("-" + "-" * len(self.tiles[0]) + "-")
         for i, row in enumerate(self.tiles):
             print("|", end="")
@@ -131,11 +130,6 @@ class Level:
                     print(cell.face, end='')
             print("|")
         print("-" + "-" * len(self.tiles[0]) + "-")
-
-    def is_walkable(self, location: Location):
-        """Check if a player can walk through a given location."""
-        j, i = location
-        return self.tiles[i % self.rows][j % self.columns].walkable
 
     def index(self, tile: Tile) -> Location:
         """Get the location of a given tile in the map. If there are multiple tiles of that type, then only one is
@@ -159,6 +153,23 @@ class Level:
         """Get the tile type at a give location."""
         j, i = xy
         return self.tiles[i][j]
+
+    def correct(self, row: int): #IGNORA ESTA FUNCION
+    
+        """correct the rows when the player moves"""
+
+        column = 1
+        location = (column, row)
+
+        location[column - 1, row] = self.loc(location)
+
+        #for i in range(0, 81):
+
+
+    def is_walkable(self, location: Location):
+        """Check if a player can walk through a given location."""
+        j, i = location
+        return self.tiles[i % self.rows][j % self.columns].walkable
 
     def get_items(self, xy: Location) -> List[items.Item]:
         """Get a list of all items at a given location. Removes the items from that location."""
@@ -256,7 +267,7 @@ class Dungeon:
         # Ubicar escalera del nivel inferior
         self.dungeon[-1].add_stair_up(self.stairs_up[-1])
 
-    def render(self, player: player.Player, gnome: gnome.Gnome):
+    def render(self, player, gnome):
         """Draw current level onto the terminal, including player and items. Player must have a loc() method, returning
         its location, and a face attribute. All items in the map must have a face attribute which is going to be shown.
         If there are multiple items in one location, only one will be rendered.
@@ -303,7 +314,3 @@ class Dungeon:
     def is_free(self, xy: Location) -> bool:
         """NOT IMPLEMENTED. Check if a given location is free of other entities. See Level.is_free()."""
         return self.dungeon[self.level].is_free(xy)
-
-dungeon = Dungeon(25, 80)
-
-dungeon.render(human, gnomes)
