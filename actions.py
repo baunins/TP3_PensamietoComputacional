@@ -27,8 +27,8 @@ def move_to(dungeon: mapping.Dungeon, player: player.Player, location: Tuple[num
 
 def random_player_spawn():
 
-    rows = random.randrange(1, 25)
-    columns = random.randrange(1, 80)
+    columns = random.randrange(1, 25)
+    rows = random.randrange(1, 80)
 
     return rows, columns
 
@@ -52,17 +52,22 @@ def random_gnome_movement(gnome):
     
 def move(human, direction):
     loc_human = human.loc()
-    new_locs = ((loc_human[0], loc_human[1] - 1), (loc_human[0], loc_human[1] + 1), (loc_human[0] - 1, loc_human[0]), (loc_human[0] + 1, loc_human[0]))
+    new_locs = ((loc_human[0], loc_human[1] - 1), (loc_human[0], loc_human[1] + 1), (loc_human[0] - 1, loc_human[1]), (loc_human[0] + 1, loc_human[1]))
 
-
-    if loc_human[1] - 1 > 1 and loc_human[1] + 1 < 25 and loc_human[0] - 1 > 1 and loc_human[0] + 1 < 80:
-        if direction == "up":
+    if direction == "up":
+        if loc_human[1] - 1 > 1:
             return new_locs[0]
-        elif direction == "down":
+    
+    elif direction == "down":
+        if loc_human[1] + 1 < 25:
             return new_locs[1]
-        elif direction == "left":
+
+    elif direction == "left":
+        if loc_human[0] - 1 > 1:
             return new_locs[2]
-        elif direction == "right":
+
+    elif direction == "right":
+        if loc_human[0] + 1 < 80:
             return new_locs[3]
 
     return loc_human

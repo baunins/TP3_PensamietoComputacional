@@ -15,14 +15,21 @@ COLUMNS = 80
 
 def read_key(key):
 
-    dicc = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
+    dicc = {'w': 'up',
+    's': 'down', 
+    'a': 'left', 
+    'd': 'right'}
 
-    if key in dicc:
-        if dungeon.is_walkable(actions.move(player, dicc.get(key))) == True:
-            move_player = actions.move(player, dicc.get(key))
+    if key in dicc: 
+
+        move_player = actions.move(player, dicc.get(key))
+        if dungeon.is_walkable(move_player) == True:
             player.move_to(move_player)
+
+        move_gnome = actions.random_gnome_movement(gnome)
+        while dungeon.is_walkable(move_gnome) == False:
             move_gnome = actions.random_gnome_movement(gnome)
-            gnome.move_to(move_gnome)
+        gnome.move_to(move_gnome)
 
     elif key not in dicc:
         player.loc()
@@ -53,19 +60,19 @@ if __name__ == "__main__":
         key = magic.read_single_keypress()
         # Hacer algo con keys:
                 
-        if key[-1] == 'w':
+        if key[0] == 'w':
 
             read_key('w')
                 
-        elif key[-1] == 'a':
+        elif key[0] == 'a':
 
             read_key('a')
             
-        elif key[-1] == 's':
+        elif key[0] == 's':
             
             read_key('s')
 
-        elif key[-1] == 'd':
+        elif key[0] == 'd':
 
             read_key('d')
 
