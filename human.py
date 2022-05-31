@@ -27,5 +27,3 @@ class Human(Player):
             return False
         elif self.tool != None:
             return True
-
-human = Human("Felpa", (20, 22), 100)

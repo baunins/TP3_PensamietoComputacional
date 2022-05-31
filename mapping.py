@@ -5,8 +5,7 @@ from typing import Optional, Tuple, List
 import gnome
 import player
 import items
-from human import human
-from gnome import gnome
+
 
 
 Location = Tuple[int, int]

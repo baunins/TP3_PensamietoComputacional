@@ -14,8 +14,7 @@ class Player:
 
     def move_to(self, xy):
         self.x, self.y = xy
-        return (self.x, self.y)
-    
+            
     def kill(self):
         self.hp = 0
         self.alive = False

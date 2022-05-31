@@ -10,5 +10,3 @@ class Gnome(Player):
 
     def damage(self):
         return random.random() * 20
-
-gnome = Gnome('Gnome', (12, 7))
