@@ -1,11 +1,11 @@
 import time
 import mapping
-import magic
+import msvcrt
 
 
 from gnome import Gnome
 from human import Human
-from items import Item, Sword
+from items import Amulet, Item, PickAxe, Sword
 import actions
 from player import Player
 
@@ -42,14 +42,14 @@ if __name__ == "__main__":
     level = 0
     player = Human("Felpa", actions.random_player_spawn(), 100)
     gnome = Gnome('Gnome', actions.random_player_spawn())
-    #sword = Sword(20, 30, (15, 20))
-
-    # initial locations may be random generated
-    #gnomes =
+    item_sword = Sword(20, 30) #falta pasarle el level
+    item_amulet = Amulet() #falta pasarle el level
+    item_pickaxe = PickAxe() #falta pasarle el level
 
     dungeon = mapping.Dungeon(ROWS, COLUMNS, 3)
-    #dungeon.add_item(sword)
-    # Agregarle cosas al dungeon, cosas que no se creen automáticamente al crearlo (por ejemplo, ya se crearon las escaleras).
+    dungeon.add_item(item_sword, 1, (20, 15))
+    dungeon.add_item(item_amulet, 1, (13, 30))
+    dungeon.add_item(item_pickaxe, 1)
 
     turns = 0
     while dungeon.level >= 0:
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
         dungeon.render(player, gnome)
         # read key
-        key = magic.read_single_keypress()
+        key = msvcrt.getch().decode('UTF-8')
         # Hacer algo con keys:
                 
         if key[0] == 'w':
@@ -75,12 +75,3 @@ if __name__ == "__main__":
         elif key[0] == 'd':
 
             read_key('d')
-
-
-        # move player and/or gnomes
-
-    #if player has amulet:
-        #win!
-    #elif player doesn't have amulet:
-        #lose :(
-    # Salió del loop principal, termina el juego
