@@ -108,27 +108,6 @@ class Level:
         items.append(item)
         self.items[(i, j)] = items
 
-    # def render(self, player, gnome):
-    #     """Draw the map onto the terminal, including player and items. Player must have a loc() method, returning its
-    #     location, and a face attribute. All items in the map must have a face attribute which is going to be shown. If
-    #     there are multiple items in one location, only one will be rendered.
-    #     """
-    #     print("-" + "-" * len(self.tiles[0]) + "-")
-    #     for i, row in enumerate(self.tiles):
-    #         print("|", end="")
-    #         for j, cell in enumerate(row):
-    #             if (j, i) == player.loc():
-    #                 print(player.face, end='')
-
-    #             if (j, i) == gnome.loc():
-    #                 print(gnome.face, end='')
-
-    #             elif (i, j) in self.items:
-    #                 print(self.items[(i, j)][0].face, end='')
-    #             else:
-    #                 print(cell.face, end='')
-    #         print("|")
-    #     print("-" + "-" * len(self.tiles[0]) + "-")
 
     def render(self, player: player.Player, gnome: player.Player):
         """Draw the map onto the terminal, including player and items. Player must have a loc() method, returning its
@@ -142,7 +121,7 @@ class Level:
                 if (j, i) == player.loc():
                     print(player.face, end='')
             
-                elif (j, i) == gnome.loc():
+                elif (j, i) == gnome.loc() and gnome.alive == True:
                     print(gnome.face, end='')
 
                 elif (i, j) in self.items:

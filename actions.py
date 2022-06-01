@@ -25,37 +25,48 @@ def move_to(dungeon: mapping.Dungeon, player: player.Player, location: Tuple[num
     # completar
     raise NotImplementedError
 
-def random_player_spawn():
-
-    columns = random.randrange(1, 25)
-    rows = random.randrange(1, 80)
-
-    return rows, columns
-
 def random_gnome_movement(gnome):
 
     loc_gnome = gnome.loc()
+    right = (loc_gnome[0] + 1, loc_gnome[1])
+    up = (loc_gnome[0], loc_gnome[1] - 1)
+    left = (loc_gnome[0] - 1, loc_gnome[1])
+    down = (loc_gnome[0], loc_gnome[1] + 1)
     
     num = random.randrange(1, 5)
 
     if num == 1:
-        return (loc_gnome[0], loc_gnome[1] + 1)
+        if right[0] < 80:
+            return right
     
     elif num == 2:
-        return (loc_gnome[0] - 1, loc_gnome[1])
+        if up[1] > 0:
+            return up
     
     elif num == 3:
-        return (loc_gnome[0], loc_gnome[1] - 1)
+        if left[0] > 0:
+            return left
     
     elif num == 4:
-        return (loc_gnome[0] + 1, loc_gnome[1])
+        if down[1] < 80:
+            return down
+    
+    else:
+        return loc_gnome
+
+def random_player_spawn():
+
+    rows = random.randrange(1, 25)
+    columns = random.randrange(1, 80)
+
+    return columns, rows
     
 def move(human, direction):
     loc_human = human.loc()
     new_locs = ((loc_human[0], loc_human[1] - 1), (loc_human[0], loc_human[1] + 1), (loc_human[0] - 1, loc_human[1]), (loc_human[0] + 1, loc_human[1]))
 
     if direction == "up":
-        if loc_human[1] - 1 > 1:
+        if loc_human[1] - 1 > -1:
             return new_locs[0]
     
     elif direction == "down":

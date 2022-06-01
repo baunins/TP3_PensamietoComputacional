@@ -40,8 +40,8 @@ if __name__ == "__main__":
 
     # initial parameters
     level = 0
-    player = Human("Felpa", (10, 10), 100)
-    gnome = Gnome('Gnome', (12, 7))
+    player = Human("Felpa", actions.random_player_spawn(), 100)
+    gnome = Gnome('Gnome', actions.random_player_spawn())
     #sword = Sword(20, 30, (15, 20))
 
     # initial locations may be random generated
