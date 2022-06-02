@@ -107,7 +107,6 @@ class Level:
         items.append(item)
         self.items[(i, j)] = items
 
-
     def render(self, player: player.Player, gnome: player.Player):
         """Draw the map onto the terminal, including player and items. Player must have a loc() method, returning its
         location, and a face attribute. All items in the map must have a face attribute which is going to be shown. If
@@ -153,18 +152,6 @@ class Level:
         """Get the tile type at a give location."""
         j, i = xy
         return self.tiles[i][j]
-
-    def correct(self, row: int): #IGNORA ESTA FUNCION
-    
-        """correct the rows when the player moves"""
-
-        column = 1
-        location = (column, row)
-
-        location[column - 1, row] = self.loc(location)
-
-        #for i in range(0, 81):
-
 
     def is_walkable(self, location: Location):
         """Check if a player can walk through a given location."""

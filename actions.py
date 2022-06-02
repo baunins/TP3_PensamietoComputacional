@@ -40,7 +40,7 @@ def random_gnome_movement(gnome):
             return right
     
     elif num == 2:
-        if up[1] > 0:
+        if up[1] > -1:
             return up
     
     elif num == 3:
@@ -48,11 +48,10 @@ def random_gnome_movement(gnome):
             return left
     
     elif num == 4:
-        if down[1] < 80:
+        if down[1] < 25:
             return down
-    
-    else:
-        return loc_gnome
+
+    return loc_gnome
 
 def random_player_spawn():
 
@@ -62,28 +61,30 @@ def random_player_spawn():
     return columns, rows
     
 def move(human, direction):
+
     loc_human = human.loc()
-    new_locs = ((loc_human[0], loc_human[1] - 1), (loc_human[0], loc_human[1] + 1), (loc_human[0] - 1, loc_human[1]), (loc_human[0] + 1, loc_human[1]))
+    new_locs = ((loc_human[0], loc_human[1] - 1), (loc_human[0], loc_human[1] + 1), 
+    (loc_human[0] - 1, loc_human[1]), (loc_human[0] + 1, loc_human[1]))
 
     if direction == "up":
-        if loc_human[1] - 1 > -1:
-            return new_locs[0]
-    
+         if loc_human[1] - 1 > -1:
+             return new_locs[0]
+   
     elif direction == "down":
-        if loc_human[1] + 1 < 25:
-            return new_locs[1]
+         if loc_human[1] + 1 < 25:
+             return new_locs[1]
 
     elif direction == "left":
-        if loc_human[0] - 1 > 1:
-            return new_locs[2]
+         if loc_human[0] - 1 > 0:
+             return new_locs[2]
 
     elif direction == "right":
-        if loc_human[0] + 1 < 80:
-            return new_locs[3]
+         if loc_human[0] + 1 < 80:
+             return new_locs[3]
 
     return loc_human
 
-#CODIGO REPETIDO
+
 
 def climb_stair(dungeon: mapping.Dungeon, player: player.Player):
     # completar
@@ -94,7 +95,19 @@ def descend_stair(dungeon: mapping.Dungeon, player: player.Player):
     # completar
     raise NotImplementedError
 
+def pickup(dungeon: mapping.Dungeon, human: player.Player):
 
-def pickup(dungeon: mapping.Dungeon, player: player.Player):
-    # completar
-    raise NotImplementedError
+    item = str(dungeon.get_items(human.loc()))
+    print(item)
+
+    if len(item) > 0:
+        if item == "[Item('Sword', '⚔')]":
+            human.set_sword()
+
+        elif item == "[Item('Pickaxe', '⛏️')]":
+            human.set_picaxe()
+
+        elif item == "[Item('Pickaxe', '💎')]":
+            human.set_amulet()
+
+            

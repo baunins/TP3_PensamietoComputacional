@@ -16,14 +16,11 @@ class Human(Player):
             return random.random() * 20 + 5
         return random.random() * 10 + 1
 
-    def has_sword(self):
-        if self.weapon == None:
-            return False
-        elif self.weapon != None:
-            return True
+    def set_sword(self):
+       self.weapon = 'Sword'
 
-    def has_sword(self):
-        if self.tool == None:
-            return False
-        elif self.tool != None:
-            return True
+    def set_picaxe(self):
+        self.tool = 'Picaxe'
+
+    def set_amulet(self):
+        self.treasure = 'Amulet'

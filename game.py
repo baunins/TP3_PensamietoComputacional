@@ -1,11 +1,11 @@
 import time
 import mapping
-import msvcrt
+import magic
 
 
 from gnome import Gnome
 from human import Human
-from items import Amulet, Item, PickAxe, Sword
+from items import Amulet, PickAxe, Sword
 import actions
 from player import Player
 
@@ -13,7 +13,7 @@ from player import Player
 ROWS = 25
 COLUMNS = 80
 
-def read_key(key):
+def read_key(key, player, dungeon):
 
     dicc = {'w': 'up',
     's': 'down', 
@@ -23,13 +23,17 @@ def read_key(key):
     if key in dicc: 
 
         move_player = actions.move(player, dicc.get(key))
-        if dungeon.is_walkable(move_player) == True:
+        print(player.tool)
+        if player.tool == None:
+            if dungeon.is_walkable(move_player) == True:
+                player.move_to(move_player)
+        elif player.tool == "Picaxe":
+            dungeon.dig(move_player)
             player.move_to(move_player)
 
         move_gnome = actions.random_gnome_movement(gnome)
-        while dungeon.is_walkable(move_gnome) == False:
-            move_gnome = actions.random_gnome_movement(gnome)
-        gnome.move_to(move_gnome)
+        if dungeon.is_walkable(move_gnome) == True:
+            gnome.move_to(move_gnome)
 
     elif key not in dicc:
         player.loc()
@@ -59,21 +63,24 @@ if __name__ == "__main__":
         dungeon.new_level(player.loc())
         dungeon.render(player, gnome)
         # read key
-        key = msvcrt.getch().decode('UTF-8')
+        key = magic.read_single_keypress()
         # Hacer algo con keys:
                 
         if key[0] == 'w':
 
-            read_key('w')
+            read_key('w', player, dungeon)
                 
         elif key[0] == 'a':
 
-            read_key('a')
+            read_key('a', player, dungeon)
             
         elif key[0] == 's':
             
-            read_key('s')
+            read_key('s', player, dungeon)
 
         elif key[0] == 'd':
 
-            read_key('d')
+            read_key('d', player, dungeon)
+
+        elif key[0] == 'e':
+            actions.pickup(dungeon, player)
