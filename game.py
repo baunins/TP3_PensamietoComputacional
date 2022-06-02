@@ -50,11 +50,13 @@ if __name__ == "__main__":
     dungeon.add_item(item_sword, 1, (20, 15))
     dungeon.add_item(item_amulet, 1, (13, 30))
     dungeon.add_item(item_pickaxe, 1)
+    
+    #dungeon.new_level(player.loc())
 
     turns = 0
     while dungeon.level >= 0:
         turns += 1
-
+        dungeon.new_level(player.loc())
         dungeon.render(player, gnome)
         # read key
         key = msvcrt.getch().decode('UTF-8')

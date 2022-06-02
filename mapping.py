@@ -1,11 +1,10 @@
 from py_compile import _get_default_invalidation_mode
 import random
-from typing import Optional, Tuple, List
+from typing import Mapping, Optional, Tuple, List
 
 import gnome
 import player
 import items
-import human
 import gnome
 
 Location = Tuple[int, int]
@@ -297,6 +296,13 @@ class Dungeon:
     def loc(self, xy: Location) -> Tile:
         """Get the tile type at a give location."""
         return self.dungeon[self.level].loc(xy)
+
+    def new_level(self, loc_player: tuple):
+        """If the player is in the same position as a stair a new map/level will be generated"""
+        if self.dungeon[self.level].loc(loc_player).face == ">":
+            self.level += 1
+        elif self.dungeon[self.level].loc(loc_player).face == "<":
+            self.level -= 1
 
     def index(self, tile: Tile) -> Location:
         """Get the location of a given tile in the map. If there are multiple tiles of that type, then only one is
