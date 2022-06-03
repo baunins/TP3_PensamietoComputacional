@@ -3,13 +3,14 @@ from player import Player
 
 
 class Human(Player):
-    def __init__(self, name, xy, hit_points):
-        super().__init__(name, xy, hit_points)
+    def __init__(self, name, xy):
+        super().__init__(name, xy, 100)
         self.weapon = None
         self.treasure = None
         self.tool = None
         self.alive = True
         self.face = '@'
+        self.hp = 100
 
     def damage(self):
         if self.sword:
