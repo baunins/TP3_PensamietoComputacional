@@ -309,14 +309,6 @@ class Dungeon:
 
         return False
 
-    def get_path(self, initial: Location, final: Location) -> bool:
-        """Return a sequence of locations between initial location and final location, if it exits."""
-
-        if self.are_connected(initial, final) == True:
-            pass
-
-        return False
-
     def index(self, tile: Tile) -> Location:
         """Get the location of a given tile in the map. If there are multiple tiles of that type, then only one is
         returned. See Level.index().

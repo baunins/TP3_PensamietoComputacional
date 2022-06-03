@@ -45,7 +45,7 @@ def play_again():
 
     play_again = input('\nDo you want to play again? [yes/no]\n\n> ')
     while play_again not in ['yes', 'no']:
-        play_again = input('\n\nPlease type "yes" or "no"\n\n> ')
+        play_again = input('\nPlease type "yes" or "no"\n\n> ')
         if play_again == 'yes':
             main()
         elif play_again == 'no':
@@ -56,8 +56,8 @@ def play_again():
     # initial parameters
 def main():
 
-    name = input("Welcome to the dungeons! What's your name?\n\n> ")
-    input(f'''\n\nGreat, {name}! Your objective is to grab the amulet ("), hidden in the lowest dungeon,
+    name = input("\nWelcome to the dungeons! What's your name?\n\n> ")
+    input(f'''\n\nGreat, {name}! Your objective is to grab the amulet "♢", hidden in the lowest dungeon,
 and escape with it.\n\nBut beware! The gnome "G" will kill you if you're not careful.
 \nThe picaxe "⛏️" can help you destroy walls in the dungeons and the sword "⚔" can help you kill the gnome.
 Whenever you're ready, press enter to start the game!\n\nGood luck out there, {name}!''')
@@ -85,7 +85,8 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
             print(f'Congratulations, {name}! You succesfully escaped with the amulet!')
             play_again()
         elif dungeon.level == -1 and player.has_amulet() == False:
-            print("{}")
+            print(f'Game over. {name} escaped the dungeons without the amulet.')
+            play_again()
 
         print(f"{name}'s HP: {player.get_hit_points()} | Gnome's HP: {gnome.get_hit_points()} | Tools: {player.get_tools()} | Weapons: {player.get_weapons()} | Amulet: {player.get_amulet()}")      
 
