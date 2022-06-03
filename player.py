@@ -3,8 +3,7 @@ class Player:
         self.name = name
         self.x, self.y = xy
         self.hp = hit_points
-
-    #@hp.setter
+        
     def hp(self, value):
         self.hp = value
         
@@ -14,9 +13,8 @@ class Player:
     def move_to(self, xy):
         self.x, self.y = xy
             
-    def kill(self):
-        self.hp = 0
-        self.alive = False
+    def die(self):
+        self.face = '💀'
 
     def get_hit_points(self):
         return self.hp

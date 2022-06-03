@@ -8,8 +8,7 @@ class Gnome(Player):
         self.alive = True
         self.face = 'G'
 
-    def damage(self):
-        return random.random() * 20
-
-    def gnome_hp_damage(self):
-        self.hp -= 10
+    def gnome_receive_damage(self):
+        self.hp -= int(random.random() * 20) + 5
+        if self.hp < 0:
+            self.hp = 0

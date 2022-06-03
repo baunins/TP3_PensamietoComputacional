@@ -53,7 +53,27 @@ def random_gnome_movement(gnome):
 
     return loc_gnome
 
-def random_player_spawn():
+def player_picaxe_spawn(dungeon):
+    
+    player_loc = random_spawn()
+    picaxe_loc = random_spawn()
+
+    if dungeon.are_connected(player_loc, picaxe_loc) == True:
+        return player_loc, picaxe_loc
+
+    return player_picaxe_spawn(dungeon)
+
+def gnome_spawn(dungeon):
+
+    player_loc = random_spawn()
+    gnome_loc = random_spawn()
+    
+    if dungeon.are_connected(player_loc, gnome_loc):
+        return gnome_loc
+        
+    return gnome_spawn(dungeon)
+
+def random_spawn():
 
     rows = random.randrange(1, 25)
     columns = random.randrange(1, 80)
@@ -75,7 +95,7 @@ def move(human, direction):
              return new_locs[1]
 
     elif direction == "left":
-         if loc_human[0] - 1 > 0:
+         if loc_human[0] - 1 > -1:
              return new_locs[2]
 
     elif direction == "right":
@@ -86,19 +106,18 @@ def move(human, direction):
 
 
 
-def climb_stair(dungeon: mapping.Dungeon, player: player.Player):
-    # completar
-    raise NotImplementedError
+def climb_stair(dungeon: mapping.Dungeon, player: player.Player, level):
+    
+    level -=1
 
 
-def descend_stair(dungeon: mapping.Dungeon, player: player.Player):
-    # completar
-    raise NotImplementedError
+def descend_stair(dungeon: mapping.Dungeon, player: player.Player, level):
+    
+    level += 1
 
 def pickup(dungeon: mapping.Dungeon, human: player.Player):
 
     item = str(dungeon.get_items(human.loc()))
-    print(item)
 
     if len(item) > 0:
         if item == "[Item('Sword', '⚔')]":
@@ -107,7 +126,7 @@ def pickup(dungeon: mapping.Dungeon, human: player.Player):
         elif item == "[Item('Pickaxe', '⛏️')]":
             human.set_picaxe()
 
-        elif item == "[Item('Pickaxe', '💎')]":
+        elif item == "[Item('Amulet', '💎')]":
             human.set_amulet()
 
             

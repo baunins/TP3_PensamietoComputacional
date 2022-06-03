@@ -6,6 +6,7 @@ import gnome
 import player
 import items
 import gnome
+import human
 
 Location = Tuple[int, int]
 
@@ -184,44 +185,6 @@ class Level:
     #        return True
 
 
-    def are_connected(self, initial: Location, final: Location) -> bool:
-        """Check if there is walkable path between initial location and final location."""
-
-        right = (initial[0] + 1, initial[1])
-        up = (initial[0], initial[1] + 1)
-        left = (initial[0] - 1, initial[1])
-        down = (initial[0], initial[1] - 1)
-
-        if self.is_walkable(right) == True:
-            if right == final:
-                return True
-            return self.are_connected(right, final)
-
-        elif self.is_walkable(up) == True:
-            if up == final:
-                return True
-            return self.are_connected(up, final)
-        
-        elif self.is_walkable(left) == True:
-            if left == final:
-                return True
-            return self.are_connected(left, final)
-
-        elif self.is_walkable(down) == True:
-            if down == final:
-                return True
-            return self.are_connected(down, final)
-
-        return False    
-
-    def get_path(self, initial: Location, final: Location) -> bool:
-        """Return a sequence of locations between initial location and final location, if it exits."""
-
-        if self.are_connected(initial, final) == True:
-            pass
-
-        return False
-
 
 class Dungeon:
     """Dungeon(rows: int, columns: int, levels: int = 3) -> Dungeon
@@ -261,6 +224,24 @@ class Dungeon:
         """
         self.dungeon[self.level].render(player, gnome)
 
+    def index(self, tile: Tile) -> Location:
+        """Get the location of a given tile in the map. If there are multiple tiles of that type, then only one is
+        returned.
+
+        Arguments
+
+        tile (Tile) -- one of the known tile types (AIR, WALL, STAIR_DOWN, STAIR_UP)
+
+        Returns the location of that tile type or raises ValueError
+        """
+        for i in range(self.rows):
+            try:
+                j = self.tiles[i].index(tile)
+                return j, i
+            except ValueError:
+                pass
+        raise ValueError
+
     def find_free_tile(self) -> Location:
         """Randomly searches for a free location inside the level's map.
         This method might never end.
@@ -290,6 +271,52 @@ class Dungeon:
             self.level += 1
         elif self.dungeon[self.level].loc(loc_player).face == "<":
             self.level -= 1
+
+    # def are_connected(self, initial: Location, final: Location) -> bool:
+        
+    #     """Check if there is walkable path between initial and final location."""
+
+    #     right = (initial[0] + 1, initial[1])
+    #     up = (initial[0], initial[1] + 1)
+    #     left = (initial[0] - 1, initial[1])
+    #     down = (initial[0], initial[1] - 1)
+
+    #     checked = []
+
+    #     if self.is_walkable(right) == True and right not in checked:
+    #         if right == final:
+    #             return True
+
+    #         checked.append(right)
+    #         return self.are_connected(right, final)
+
+    #     elif self.is_walkable(up) == True and up not in checked:
+    #         if up == final:
+    #             return True
+    #         checked.append(up)
+    #         return self.are_connected(up, final)
+        
+    #     elif self.is_walkable(left) == True and left not in checked:
+    #         if left == final:
+    #             return True
+    #         checked.append(left)
+    #         return self.are_connected(left, final)
+
+    #     elif self.is_walkable(down) == True and down not in checked:
+    #         if down == final:
+    #             return True
+    #         checked.append(down)
+    #         return self.are_connected(down, final)
+
+    #     return False
+
+    def get_path(self, initial: Location, final: Location) -> bool:
+        """Return a sequence of locations between initial location and final location, if it exits."""
+
+        if self.are_connected(initial, final) == True:
+            pass
+
+        return False
 
     def index(self, tile: Tile) -> Location:
         """Get the location of a given tile in the map. If there are multiple tiles of that type, then only one is
