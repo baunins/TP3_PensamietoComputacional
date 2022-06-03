@@ -203,6 +203,7 @@ class Dungeon:
         self.rows = rows
         self.columns = columns
         self.level = 0
+        self.checked = []
 
         self.stairs_up = [level.get_random_location() for level in self.dungeon]
         self.stairs_down = [level.get_random_location() for level in self.dungeon[:-1]]
@@ -272,43 +273,41 @@ class Dungeon:
         elif self.dungeon[self.level].loc(loc_player).face == "<":
             self.level -= 1
 
-    # def are_connected(self, initial: Location, final: Location) -> bool:
+    def are_connected(self, initial: Location, final: Location) -> bool:
         
-    #     """Check if there is walkable path between initial and final location."""
+        """Check if there is walkable path between initial and final location."""
 
-    #     right = (initial[0] + 1, initial[1])
-    #     up = (initial[0], initial[1] + 1)
-    #     left = (initial[0] - 1, initial[1])
-    #     down = (initial[0], initial[1] - 1)
+        right = (initial[0] + 1, initial[1])
+        up = (initial[0], initial[1] + 1)
+        left = (initial[0] - 1, initial[1])
+        down = (initial[0], initial[1] - 1)
 
-    #     checked = []
+        if self.is_walkable(right) == True and right not in self.checked:
+            if right == final:
+                return True
 
-    #     if self.is_walkable(right) == True and right not in checked:
-    #         if right == final:
-    #             return True
+            self.checked.append(right)
+            return self.are_connected(right, final)
 
-    #         checked.append(right)
-    #         return self.are_connected(right, final)
-
-    #     elif self.is_walkable(up) == True and up not in checked:
-    #         if up == final:
-    #             return True
-    #         checked.append(up)
-    #         return self.are_connected(up, final)
+        elif self.is_walkable(up) == True and up not in self.checked:
+            if up == final:
+                return True
+            self.checked.append(up)
+            return self.are_connected(up, final)
         
-    #     elif self.is_walkable(left) == True and left not in checked:
-    #         if left == final:
-    #             return True
-    #         checked.append(left)
-    #         return self.are_connected(left, final)
+        elif self.is_walkable(left) == True and left not in self.checked:
+            if left == final:
+                return True
+            self.checked.append(left)
+            return self.are_connected(left, final)
 
-    #     elif self.is_walkable(down) == True and down not in checked:
-    #         if down == final:
-    #             return True
-    #         checked.append(down)
-    #         return self.are_connected(down, final)
+        elif self.is_walkable(down) == True and down not in self.checked:
+            if down == final:
+                return True
+            self.checked.append(down)
+            return self.are_connected(down, final)
 
-    #     return False
+        return False
 
     def get_path(self, initial: Location, final: Location) -> bool:
         """Return a sequence of locations between initial location and final location, if it exits."""

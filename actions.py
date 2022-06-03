@@ -34,23 +34,24 @@ def random_gnome_movement(gnome):
     down = (loc_gnome[0], loc_gnome[1] + 1)
     
     num = random.randrange(1, 5)
-
-    if num == 1:
-        if right[0] < 80:
-            return right
     
-    elif num == 2:
-        if up[1] > -1:
-            return up
+    if gnome.get_hp() != 0:
+        if num == 1:
+            if right[0] < 80:
+                return right
+        
+        elif num == 2:
+            if up[1] > -1:
+                return up
+        
+        elif num == 3:
+            if left[0] > 0:
+                return left
+        
+        elif num == 4:
+            if down[1] < 25:
+                return down
     
-    elif num == 3:
-        if left[0] > 0:
-            return left
-    
-    elif num == 4:
-        if down[1] < 25:
-            return down
-
     return loc_gnome
 
 def player_picaxe_spawn(dungeon):
@@ -58,20 +59,32 @@ def player_picaxe_spawn(dungeon):
     player_loc = random_spawn()
     picaxe_loc = random_spawn()
 
-    if dungeon.are_connected(player_loc, picaxe_loc) == True:
-        return player_loc, picaxe_loc
-
-    return player_picaxe_spawn(dungeon)
+    try:
+        if dungeon.are_connected(player_loc, picaxe_loc) == True:
+            dungeon.checked = []
+            return player_loc, picaxe_loc
+        dungeon.checked = []
+        return player_picaxe_spawn(dungeon)
+    
+    except RecursionError as e:
+        return player_picaxe_spawn(dungeon)
 
 def gnome_spawn(dungeon):
 
     player_loc = random_spawn()
     gnome_loc = random_spawn()
     
-    if dungeon.are_connected(player_loc, gnome_loc):
-        return gnome_loc
+    try:
+        if dungeon.are_connected(player_loc, gnome_loc) == True:
+            dungeon.checked = []
+            return gnome_loc
+        dungeon.checked = []
+        return gnome_spawn(dungeon)
+    
+    except RecursionError as e:
+        return gnome_spawn(dungeon)
         
-    return gnome_spawn(dungeon)
+        
 
 def random_spawn():
 
@@ -126,7 +139,7 @@ def pickup(dungeon: mapping.Dungeon, human: player.Player):
         elif item == "[Item('Pickaxe', '⛏️')]":
             human.set_picaxe()
 
-        elif item == "[Item('Amulet', '💎')]":
+        elif item == """[Item('Amulet', '♢')]""":
             human.set_amulet()
 
             

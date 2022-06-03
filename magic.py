@@ -53,6 +53,3 @@ def read_single_keypress():
         termios.tcsetattr(fd, termios.TCSAFLUSH, attrs_save)
         fcntl.fcntl(fd, fcntl.F_SETFL, flags_save)
     return tuple(ret)
-
-
-print(read_single_keypress())

@@ -14,7 +14,7 @@ class Player:
         self.x, self.y = xy
             
     def die(self):
-        self.face = '💀'
+        self.face = '☠'
 
     def get_hit_points(self):
         return self.hp

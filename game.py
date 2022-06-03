@@ -8,6 +8,9 @@ from human import Human
 from items import Amulet, PickAxe, Sword
 import actions
 from player import Player
+import sys
+
+sys.setrecursionlimit(18000)
 
 
 ROWS = 25
@@ -38,22 +41,30 @@ def read_key(key, player, dungeon, gnome):
     elif key not in dicc:
         player.loc()
 
+def play_again():
+
+    play_again = input('\nDo you want to play again? [yes/no]\n\n> ')
+    while play_again not in ['yes', 'no']:
+        play_again = input('\n\nPlease type "yes" or "no"\n\n> ')
+        if play_again == 'yes':
+            main()
+        elif play_again == 'no':
+            print('\nGoodbye!')
+            exit()
             
 
     # initial parameters
 def main():
 
     name = input("Welcome to the dungeons! What's your name?\n\n> ")
-    input(f'''\n\nGreat, {name}! Your objective is to grab the amulet "💎", hidden in the lowest dungeon,
+    input(f'''\n\nGreat, {name}! Your objective is to grab the amulet ("), hidden in the lowest dungeon,
 and escape with it.\n\nBut beware! The gnome "G" will kill you if you're not careful.
 \nThe picaxe "⛏️" can help you destroy walls in the dungeons and the sword "⚔" can help you kill the gnome.
 Whenever you're ready, press enter to start the game!\n\nGood luck out there, {name}!''')
 
     dungeon = mapping.Dungeon(ROWS, COLUMNS, 3)
-    #player = Human("Felpa", actions.player_picaxe_spawn(dungeon)[0]) CUANDO FUNCIONE LA RECURSIVA
-    #gnome = Gnome('Gnome', actions.gnome_spawn()) CUANDO FUNCIONE LA RECURSIVA
-    player = Human(name, actions.random_spawn())
-    gnome = Gnome('Gnome', actions.random_spawn())
+    player = Human("Felpa", actions.player_picaxe_spawn(dungeon)[0])
+    gnome = Gnome('Gnome', actions.gnome_spawn(dungeon))
     item_sword = Sword(20, 30) #falta pasarle el level
     item_amulet = Amulet() #falta pasarle el level
     item_pickaxe = PickAxe() #falta pasarle el level
@@ -61,7 +72,7 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
 
     dungeon.add_item(item_sword, 1, actions.random_spawn())
     dungeon.add_item(item_amulet, 3, actions.random_spawn())
-    dungeon.add_item(item_pickaxe, 1, actions.random_spawn())
+    dungeon.add_item(item_pickaxe, 1, actions.player_picaxe_spawn(dungeon)[1])
     #dungeon.add_item(item_pickaxe, 1, actions.player_picaxe_spawn(dungeon)[1])
 
     turns = 0
@@ -72,14 +83,9 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
 
         if dungeon.level == -1 and player.has_amulet() == True:
             print(f'Congratulations, {name}! You succesfully escaped with the amulet!')
-            play_again = input('\nDo you want to play again? [yes/no]\n\n> ')
-            while play_again not in ['yes', 'no']:
-                play_again = input('\n\nPlease type "yes" or "no"\n\n> ')
-            if play_again == 'yes':
-                main()
-            elif play_again == 'no':
-                print('\nGoodbye!')
-                exit()
+            play_again()
+        elif dungeon.level == -1 and player.has_amulet() == False:
+            print("{}")
 
         print(f"{name}'s HP: {player.get_hit_points()} | Gnome's HP: {gnome.get_hit_points()} | Tools: {player.get_tools()} | Weapons: {player.get_weapons()} | Amulet: {player.get_amulet()}")      
 
@@ -88,7 +94,8 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
         (gnome.loc()[0]-1, gnome.loc()[1]-1), (gnome.loc()[0]+1, gnome.loc()[1]-1), (gnome.loc()[0]-1, gnome.loc()[1]+1)]:
             if player.has_sword() == True:
                 gnome.gnome_receive_damage()
-            player.human_receive_damage()
+            if gnome.get_hp() != 0:
+                player.human_receive_damage()
         
         if gnome.hp == 0:
             gnome.die()
@@ -127,3 +134,4 @@ if __name__ == "__main__":
 
 #AGREGAR QUE SOLO PUEDA SUBIR LAS ESCALERAS SI MATO AL GNOMO
 #AGREGARLE DURABILIDAD AL PICO CONTANDO LA CANTIDAD DE VECES QUE ROMPIO PAREDES
+#AGREGAR LA TIENDA Y EL ORO AL PICAR LAS PAREDES

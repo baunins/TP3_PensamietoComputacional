@@ -26,7 +26,7 @@ class Sword(Item):
 
 class Amulet(Item):
     def __init__(self):
-        super().__init__('Amulet', '💎', 'treasure')
+        super().__init__('Amulet', '♢', 'treasure')
 
 
 class PickAxe(Item):

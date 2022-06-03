@@ -12,3 +12,6 @@ class Gnome(Player):
         self.hp -= int(random.random() * 20) + 5
         if self.hp < 0:
             self.hp = 0
+    
+    def get_hp(self):
+        return self.hp
