@@ -4,9 +4,7 @@ import mapping
 import random
 import player
 
-
 numeric = Union[int, float]
-
 
 def clip(value: numeric, minimum: numeric, maximum: numeric) -> numeric:
     if value < minimum:
@@ -15,12 +13,6 @@ def clip(value: numeric, minimum: numeric, maximum: numeric) -> numeric:
         return maximum
     return value
 
-
-#def attack(dungeon, player, ...): # completar
-    # completar
-    raise NotImplementedError
-
-
 def move_to(dungeon: mapping.Dungeon, player: player.Player, location: Tuple[numeric, numeric]):
     # completar
     raise NotImplementedError
@@ -28,6 +20,7 @@ def move_to(dungeon: mapping.Dungeon, player: player.Player, location: Tuple[num
 def random_gnome_movement(gnome):
 
     loc_gnome = gnome.loc()
+
     right = (loc_gnome[0] + 1, loc_gnome[1])
     up = (loc_gnome[0], loc_gnome[1] - 1)
     left = (loc_gnome[0] - 1, loc_gnome[1])
@@ -89,7 +82,7 @@ def gnome_spawn(dungeon):
 def random_spawn():
 
     rows = random.randrange(1, 25)
-    columns = random.randrange(1, 80)
+    columns = random.randrange(9, 72)
 
     return columns, rows
     

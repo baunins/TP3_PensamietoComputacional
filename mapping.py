@@ -309,6 +309,9 @@ class Dungeon:
 
         return False
 
+    def get_path(self):
+        return self.checked
+
     def index(self, tile: Tile) -> Location:
         """Get the location of a given tile in the map. If there are multiple tiles of that type, then only one is
         returned. See Level.index().

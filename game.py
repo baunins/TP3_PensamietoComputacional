@@ -10,7 +10,7 @@ import actions
 from player import Player
 import sys
 
-sys.setrecursionlimit(18000)
+sys.setrecursionlimit(20000)
 
 
 ROWS = 25
