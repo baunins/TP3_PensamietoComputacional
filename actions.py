@@ -81,8 +81,8 @@ def gnome_spawn(dungeon):
 
 def random_spawn():
 
-    rows = random.randrange(1, 25)
-    columns = random.randrange(9, 72)
+    rows = random.randrange(3, 22)
+    columns = random.randrange(10, 71)
 
     return columns, rows
     
