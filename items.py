@@ -32,3 +32,8 @@ class Amulet(Item):
 class PickAxe(Item):
     def __init__(self):
         super().__init__('Pickaxe', "⛏️", 'tool')
+
+class Food(Item):
+    def __item__(self):
+        super().__init__('Banana', "🍌", 'food')
+        self.heal = 15
