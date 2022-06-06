@@ -13,7 +13,9 @@ class Human(Player):
     
     xy -- The x and y coordinates of the object on the map
     """
+
     def __init__(self, name: str, xy: tuple):
+
         super().__init__(name, xy, 100)
         self.weapon = None
         self.treasure = None
