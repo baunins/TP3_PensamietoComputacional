@@ -1,6 +1,6 @@
-import time
+
 import mapping
-import msvcrt
+import magic
 
 
 from gnome import Gnome
@@ -104,7 +104,7 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
             print("You died!")
             exit()
 
-        key = msvcrt.getch().decode('UTF-8')
+        key = magic.read_single_keypress()
                 
         if key[0] == 'w':
 
