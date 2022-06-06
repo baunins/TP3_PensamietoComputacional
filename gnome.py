@@ -1,4 +1,3 @@
-from mapping import Location
 import random
 from player import Player
 
@@ -12,7 +11,7 @@ class Gnome(Player):
     name -- A string representing the object's name
     xy -- The x and y coordinates of the object on the map"""
 
-    def __init__(self, name: str, xy: Location):
+    def __init__(self, name: str, xy: tuple):
         super().__init__(name, xy, 100)
         self.hp = 100
         self.alive = True

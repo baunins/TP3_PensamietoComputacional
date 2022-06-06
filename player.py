@@ -1,6 +1,3 @@
-from mapping import Location
-
-
 class Player:
 
     """This class is used to instance the human and the gnome objects.
@@ -11,7 +8,7 @@ class Player:
     xy -- The x and y coordinates (integers) on the map which determine the Location of the object
     hit_points -- An integer value which represents the amount of damage the object can take before dying"""
 
-    def __init__(self, name: str, xy: Location, hit_points: int):
+    def __init__(self, name: str, xy: tuple, hit_points: int):
         self.name = name
         self.x, self.y = xy
         self.hp = hit_points
