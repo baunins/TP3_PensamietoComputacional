@@ -1,6 +1,6 @@
 import time
 import mapping
-import magic
+import msvcrt
 
 
 from gnome import Gnome
@@ -68,7 +68,7 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
     dungeon = mapping.Dungeon(ROWS, COLUMNS, 3)
     player = Human("Felpa", actions.player_picaxe_spawn(dungeon)[0])
     gnome = Gnome('Gnome', actions.gnome_spawn(dungeon))
-    item_sword = Sword(20, 30)
+    item_sword = Sword()
     item_amulet = Amulet()
     item_pickaxe = PickAxe()
     item_food = Food()
@@ -104,7 +104,7 @@ Whenever you're ready, press enter to start the game!\n\nGood luck out there, {n
             print("You died!")
             exit()
 
-        key = magic.read_single_keypress()
+        key = msvcrt.getch().decode('UTF-8')
                 
         if key[0] == 'w':
 

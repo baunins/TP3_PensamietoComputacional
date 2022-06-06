@@ -1,5 +1,4 @@
 import random
-from mapping import Location
 from player import Player
 
 
@@ -14,7 +13,7 @@ class Human(Player):
     
     xy -- The x and y coordinates of the object on the map
     """
-    def __init__(self, name: str, xy: Location):
+    def __init__(self, name: str, xy: tuple[int, int]):
         super().__init__(name, xy, 100)
         self.weapon = None
         self.treasure = None
