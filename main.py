@@ -1,5 +1,5 @@
-from player import Player
+#Este archivo está para comprobar que se puede correr todo el código 
+#importando una sola función, como lo indica el enunciado
 
-if __name__ == '__main__':
-    xy = [0, 0]
-    player =  Player('Ash', xy)
+from game import main
+main()

@@ -175,15 +175,6 @@ class Level:
         if self.tiles[i][j] is WALL:
             self.tiles[i][j] = AIR
 
-    #def is_free(self, xy: Location) -> bool:
-    #    """Check if a given location is free of other entities."""
-    #    
-    #    if gnome.get_coordinates() == xy:
-    #        return False
-    #
-    #    elif gnome.get_coordinates() != xy:
-    #        return True
-
 
 
 class Dungeon:
@@ -209,13 +200,11 @@ class Dungeon:
         self.stairs_down = [level.get_random_location() for level in self.dungeon[:-1]]
 
         for level, loc_up, loc_down in zip(self.dungeon[:-1], self.stairs_up[:-1], self.stairs_down):
-            # Ubicar escalera que sube
+
             level.add_stair_up(loc_up)
 
-            # Ubicar escalera que baja
             level.add_stair_down(loc_down)
 
-        # Ubicar escalera del nivel inferior
         self.dungeon[-1].add_stair_up(self.stairs_up[-1])
 
     def render(self, player, gnome):
